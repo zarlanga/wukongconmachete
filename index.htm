@@ -5,6 +5,36 @@
     <title>WCM</title>
 </head>
 <body>
-    acavanapasarcosas
+    
+    <textarea name="input" id="input">米 
+        氣 
+        迷 
+        咪 
+        屎 
+        尸 
+        屎 
+        尿 
+        屁 </textarea>
+        <button onclick="myfunction()" id="mecha" disabled>cargando diccionario</button>
+        <p id="outputo"></p>
+        <script>
+            let inputo = document.getElementById('input')
+            let outputo = document.getElementById('outputo')
+            let mecha = document.getElementById('mecha')
+
+            const myfunction = () => outputo.innerHTML = inputo.value;
+            
+            fetch('./diccAcortado.json')
+            .then(
+                d => d.json()
+            )
+            .then(
+               d => mecha.innerHTML = d[0].s
+            )
+            .else(
+                mecha.innerHTML = "asi era?"
+            )
+
+        </script>
 </body>
 </html>
