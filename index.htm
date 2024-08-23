@@ -3,37 +3,67 @@
 <head>
     <meta charset="UTF-8" />
     <title>WCM</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+            text-align: center;
+            height: 2rem;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     
-    <textarea name="input" id="input">米 
-        氣 
-        迷 
-        咪 
-        屎 
-        尸 
-        屎 
-        尿 
-        屁 </textarea>
-        <button onclick="myfunction()" id="mecha" disabled>cargando diccionario</button>
-        <p id="outputo"></p>
+    <textarea name="input" id="input" rows="6" style="width:70vw;margin:auto">米 氣 迷 咪  屎 尸 屎 尿 屁 </textarea>
+    <br>
+    <button onclick="myfunction()" id="mecha" disabled>cargando diccionario</button>
+        <table id="outputo"></table>
+        
         <script>
             let inputo = document.getElementById('input')
             let outputo = document.getElementById('outputo')
             let mecha = document.getElementById('mecha')
 
-            const myfunction = () => outputo.innerHTML = inputo.value;
             
-            fetch('./diccAcortado.json')
+            
+            //fetch('./diccAcortado.json')
+            fetch('https://raw.githubusercontent.com/zarlanga/wukongconmachete/main/diccAcortado.json')
             .then(
                 d => d.json()
             )
             .then(
-               d => mecha.innerHTML = d[0].s
+               d => {
+                mecha.innerHTML = d[5].s ;
+                mecha.disabled = false
+                myfunction(d[9]) //acomodar aca
+
+               }
             )
+            /*
             .else(
-                mecha.innerHTML = "asi era?"
-            )
+                d => mecha.innerHTML = "asi era?"
+            )*/
+
+            const myfunction = (dicc) => {
+                let caractPre = inputo.value.split("")
+                console.log(caractPre)
+                outputo.innerHTML = caractPre[3]
+            }
+            
+            const agregarcaracter = (it) => {
+                            outputo.innerHTML += `
+                <tr>
+                <td>${it.s}</td>
+                <td>${it.t}</td>
+                <td>${it.p}</td>
+                <td>${it.e}</td>
+            </tr>`
+            }
+
+
 
         </script>
 </body>
