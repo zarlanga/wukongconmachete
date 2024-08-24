@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <title>WCM</title>
     <style>
+        body{
+            font-size: xx-large;
+        }
         table, td, th {
             border: 1px solid black;
             text-align: center;
@@ -70,7 +73,7 @@
                 let it = {s:"hanzi", t:"hanzi tradicional", p:"pinyin", e:"definicion"};
                 outputo.innerHTML =`<tr><td>${it.s}</td>${gQV("trad") ? `<td>${it.t}</td>` :"" }<td>${it.p}</td><td>${it.e}</td></tr>`
 
-                let caractPre = inputo.value.split("").filter(c => c != " " && c != "\n")
+                let caractPre = inputo.value.split("").filter(c => c != " " )
                 //console.log(caractPre)
                 
 
@@ -80,6 +83,12 @@
 
                 caractPre.forEach(c => {
                     let itemsC = diccFiltrado.find(itC => (itC.s == c || itC.t == c) ) //filter
+                    if (c == "\n") {
+                        itemsC = {s:"----", t:"-----", p:"-------", e:"--------"}
+                        bool = !bool
+                    }
+
+
                     /*
                     itemsC.forEach(itC => 
                         //itemsOutputo.push(itC)
