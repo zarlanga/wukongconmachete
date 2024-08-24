@@ -39,23 +39,28 @@
             let mecha = document.getElementById('mecha')
             let diccFul = null
             var bool= false;
+            let url = gQV("sho") ? "https://raw.githubusercontent.com/zarlanga/wukongconmachete/main/sho.txt" : "https://raw.githubusercontent.com/zarlanga/wukongconmachete/main/unsam.txt"
 
             
+             
+             
             
             //fetch('./diccAcortado.json')
-            fetch('https://raw.githubusercontent.com/zarlanga/wukongconmachete/main/diccAcortado.json')
-            .then(
-                d => d.json()
-            )
-            .then(
-               d => {
-                mecha.innerHTML =  "火" ;
-                mecha.disabled = false
-                diccFul=d;
-                myfunction(d) //acomodar aca
+            const cargardiccionario = () => {
+                fetch('https://raw.githubusercontent.com/zarlanga/wukongconmachete/main/diccAcortado.json')
+                .then(
+                    d => d.json()
+                )
+                .then(
+                d => {
+                    mecha.innerHTML =  "火" ;
+                    mecha.disabled = false
+                    diccFul=d;
+                    myfunction(d) //acomodar aca
 
-               }
-            )
+                }
+                )
+            }
             /*
             .else(
                 d => mecha.innerHTML = "asi era?"
@@ -74,14 +79,18 @@
                 //let itemsOutputo =[];
 
                 caractPre.forEach(c => {
-                    let itemsC = diccFiltrado.find(it => (it.s == c || it.t == c) ) //filter
+                    let itemsC = diccFiltrado.find(itC => (itC.s == c || itC.t == c) ) //filter
                     /*
                     itemsC.forEach(itC => 
                         //itemsOutputo.push(itC)
                         agregarcaracter(itC)
                     )*/
-                    bool = !bool
-                    agregarcaracter(itemsC)
+                    //console.log(itemsC)
+                    
+                    if (itemsC) {
+                        bool = !bool
+                        agregarcaracter(itemsC)
+                    } 
 
                 })
 
@@ -113,6 +122,16 @@
                 }
                 return(false);
             }
+
+            fetch(url)
+             .then (d=> d.text())
+             .then(d => {
+                inputo.value = d
+                cargardiccionario()
+                
+             })
+             
+            
 
 
 
