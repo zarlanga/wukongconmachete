@@ -13,6 +13,14 @@
             border-collapse: collapse;
             width: 100%;
         }
+        .yin {
+            background-color: gray;
+            color:white
+        }
+        .yang{
+            background-color: white;
+            color:gray;
+        }
     </style>
 </head>
 <body>
@@ -26,6 +34,8 @@
             let inputo = document.getElementById('input')
             let outputo = document.getElementById('outputo')
             let mecha = document.getElementById('mecha')
+            let diccFul = null
+            var bool= false;
 
             
             
@@ -38,7 +48,8 @@
                d => {
                 mecha.innerHTML = d[5].s ;
                 mecha.disabled = false
-                myfunction(d[9]) //acomodar aca
+                diccFul=d;
+                myfunction(d) //acomodar aca
 
                }
             )
@@ -47,21 +58,59 @@
                 d => mecha.innerHTML = "asi era?"
             )*/
 
-            const myfunction = (dicc) => {
-                let caractPre = inputo.value.split("")
-                console.log(caractPre)
-                outputo.innerHTML = caractPre[3]
+            const myfunction = (dicc=diccFul) => {
+                let it = {s:"hanzi", t:"hanzi tradicional", p:"pinyin", e:"definicion"};
+                outputo.innerHTML =`<tr><td>${it.s}</td>${gQV("trad") ? `<td>${it.t}</td>` :"" }<td>${it.p}</td><td>${it.e}</td></tr>`
+
+                let caractPre = inputo.value.split("").filter(c => c != " " && c != "\n")
+                //console.log(caractPre)
+                
+
+                
+                let diccFiltrado = dicc.filter(i => caractPre.includes(i.s) || caractPre.includes(i.t))
+                //let itemsOutputo =[];
+
+                caractPre.forEach(c => {
+                    let itemsC = diccFiltrado.find(it => (it.s == c || it.t == c) ) //filter
+                    /*
+                    itemsC.forEach(itC => 
+                        //itemsOutputo.push(itC)
+                        agregarcaracter(itC)
+                    )*/
+                    bool = !bool
+                    agregarcaracter(itemsC)
+
+                })
+
+                /*
+                itemsOutputo.forEach(element => {
+                    agregarcaracter(element)
+                });
+                */
+
             }
             
             const agregarcaracter = (it) => {
-                            outputo.innerHTML += `
-                <tr>
-                <td>${it.s}</td>
-                <td>${it.t}</td>
-                <td>${it.p}</td>
-                <td>${it.e}</td>
-            </tr>`
+                outputo.innerHTML += `
+                <tr class=${ bool ? "yang": "yin"}>
+                    <td>${it.s}</td>
+                    ${gQV("trad") ? `<td>${it.t}</td>` :"" }
+                    <td>${it.p}</td>
+                    <td>${it.e}</td>
+                </tr>`
             }
+
+            
+            function gQV(variable){
+                var query = window.location.search.substring(1);
+                var vars = query.split("&");
+                for (var i=0;i<vars.length;i++) {
+                        var pair = vars[i].split("=");
+                        if(pair[0] == variable){return pair[1];}
+                }
+                return(false);
+            }
+
 
 
 
