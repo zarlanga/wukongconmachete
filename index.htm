@@ -25,10 +25,13 @@
 </head>
 <body>
     
-    <textarea name="input" id="input" rows="6" style="width:70vw;margin:auto">米 氣 迷 咪  屎 尸 屎 尿 屁 </textarea>
+    <textarea name="input" id="input" rows="6" style="width:70vw;margin:auto">米 氣 迷 咪  屎 尸 尿 屁 </textarea>
+    <br>
     <br>
     <button onclick="myfunction()" id="mecha" disabled>cargando diccionario</button>
-        <table id="outputo"></table>
+    <br>
+    <br>
+    <table id="outputo"></table>
         
         <script>
             let inputo = document.getElementById('input')
@@ -46,7 +49,7 @@
             )
             .then(
                d => {
-                mecha.innerHTML = d[5].s ;
+                mecha.innerHTML =  "火" ;
                 mecha.disabled = false
                 diccFul=d;
                 myfunction(d) //acomodar aca
