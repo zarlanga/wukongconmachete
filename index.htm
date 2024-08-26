@@ -4,18 +4,14 @@
     <meta charset="UTF-8" />
     <title>WCM</title>
     <style>
-        body{
-            font-size: xx-large;
+        body, textarea, button {
+            font-size: 2.5rem;
         }
         table, td, th {
             border: 1px solid black;
             text-align: center;
-            height: 2rem;
         }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+
         .yin {
             background-color: gray;
             color:white
@@ -24,6 +20,49 @@
             background-color: white;
             color:gray;
         }
+
+/*
+	
+	table { border-collapse: collapse; }
+	tr { display: block; float: left; padding: 5px, 0; }
+	th, td { display: block; border: 1px solid black; }
+
+
+
+	#outputo tr {
+	display:flex;
+	flex-direction:column;
+	}
+	#outputo	 {
+	display:flex;
+	flex-direction:column;
+
+	}
+	
+
+        table {
+            display:flex;
+	
+            width: 100%;
+        }
+#outputo td{
+	display:block;
+	}
+	
+
+	#outputo tbody {
+	display:flex;
+	}
+
+	tr {
+		display:block; 
+		float: left
+	}
+	th, td{
+		 display:block;
+	}
+*/
+
     </style>
 </head>
 <body>
@@ -43,7 +82,7 @@
             let diccFul = null
             var bool= false;
             let url = gQV("sho") ? "https://raw.githubusercontent.com/zarlanga/wukongconmachete/main/sho.txt" : "https://raw.githubusercontent.com/zarlanga/wukongconmachete/main/unsam.txt"
-
+	    var acumulador = "";
             
              
              
@@ -71,7 +110,7 @@
 
             const myfunction = (dicc=diccFul) => {
                 let it = {s:"hanzi", t:"hanzi tradicional", p:"pinyin", e:"definicion"};
-                outputo.innerHTML =`<tr><td>${it.s}</td>${gQV("trad") ? `<td>${it.t}</td>` :"" }<td>${it.p}</td><td>${it.e}</td></tr>`
+                acumulador =`<tr><td>${it.s}</td>${gQV("trad") ? `<td>${it.t}</td>` :"" }<td>${it.p}</td><td>${it.e}</td></tr>`
 
                 let caractPre = inputo.value.split("").filter(c => c != " " )
                 //console.log(caractPre)
@@ -84,7 +123,7 @@
                 caractPre.forEach(c => {
                     let itemsC = diccFiltrado.find(itC => (itC.s == c || itC.t == c) ) //filter
                     if (c == "\n") {
-                        itemsC = {s:"----", t:"-----", p:"-------", e:"--------"}
+                        itemsC = {s:"-", t:"-", p:"-", e:"-"}
                         bool = !bool
                     }
 
@@ -97,7 +136,7 @@
                     //console.log(itemsC)
                     
                     if (itemsC) {
-                        bool = !bool
+                        //bool = !bool
                         agregarcaracter(itemsC)
                     } 
 
@@ -108,11 +147,12 @@
                     agregarcaracter(element)
                 });
                 */
+		outputo.innerHTML = acumulador;
 
             }
             
             const agregarcaracter = (it) => {
-                outputo.innerHTML += `
+                acumulador += `
                 <tr class=${ bool ? "yang": "yin"}>
                     <td>${it.s}</td>
                     ${gQV("trad") ? `<td>${it.t}</td>` :"" }
